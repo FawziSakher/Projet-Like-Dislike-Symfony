@@ -1,0 +1,39 @@
+{# templates/post/interactions.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Interactions du post "{{ post.title }}"{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h2>Interactions sur le post :<spam style="color: red; text-align: center;"> "{{ post.title }}"</spam></h2>
+
+        {% if interactions|length > 0 %}
+            <table class="table table-bordered table-striped mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Type</th>
+                        <th>Nom d'utilisateur</th>
+                        
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for interaction in interactions %}
+                        <tr>
+                            <td>{{ interaction.type }}</td>
+                            <td>{{ interaction.username }}</td>
+                            
+                            
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Aucune interaction trouvée pour ce post.</p>
+        {% endif %}
+
+        <br>
+        <a href="{{ path('app_home_page') }}" class="btn btn-secondary">Retour</a>
+    </div>
+{% endblock %}

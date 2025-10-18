@@ -1,0 +1,24 @@
+{# templates/post/dislikers.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateurs qui ont disliké "{{ post.title }}"{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h2>Utilisateurs qui ont disliké le post : "{{ post.title }}"</h2>
+
+        {% if dislikers|length > 0 %}
+            <ul class="list-group">
+                {% for user in dislikers %}
+                    <li class="list-group-item">{{ user.email }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucun utilisateur n'a disliké ce post.</p>
+        {% endif %}
+
+        <br>
+        <a href="{{ path('app_homepage') }}" class="btn btn-secondary">Retour</a>
+    </div>
+{% endblock %}

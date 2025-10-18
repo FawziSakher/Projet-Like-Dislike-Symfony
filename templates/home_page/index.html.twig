@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomePageController!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 style="color: red; text-align: center;">Blogs</h1>
+    
+    <br>
+
+    <div class="row flex-column align-items-center">
+        {% for post in posts %}
+            <div class="col-12 col-md-14 mb-4">
+                <div class="text-center p-3 border rounded w-100">
+                    <h4 style="color: green;">{{ post.title }}</h4>
+                    <p>{{ post.content }}</p>
+
+                    <a 
+                        {% if app.user %}
+                            {% for item in post.likes %}
+                                {% if item.post == post and item.author == app.user %}
+                                    style="color: red"
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        href="{{ path('app_like', {'id': post.id}) }}"
+                    >Like ({{ post.likes|length }})</a>
+
+                    <span style="margin-left: 20px;"></span>
+
+                    <a 
+                        {% if app.user %}
+                            {% for item in post.dislikes %}
+                                {% if item.post == post and item.author == app.user %}
+                                    style="color: red"
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        href="{{ path('app_dislike', {'id': post.id}) }}"
+                    >DisLike ({{ post.dislikes|length }})</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <span style="margin-left: 20px;"></span>
+                        <a href="{{ path('app_post_interactions', {'id': post.id}) }}" class="btn btn-info btn-sm">Voir les interactions</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
